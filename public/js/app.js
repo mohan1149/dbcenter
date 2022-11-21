@@ -72,6 +72,8 @@ $(document).ready(function () {
         });
     });
 
+    
+    $('#birthday_table').DataTable();
     //Brands table
     var brands_table = $('#brands_table').DataTable({
         processing: true,

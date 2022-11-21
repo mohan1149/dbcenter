@@ -70,7 +70,7 @@
             }
         </style>
         <div style="display:flex;justify-content: center">
-            <img src="/pos/public/img/default.png" alt="Logo" width="50%">
+            <img src="/img/default.png" alt="Logo" width="50%">
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -100,8 +100,8 @@
         <br>
         <br>
         <br>
-        <h4 class="text-center">Thank You for visting Rituals Salon</h4>
+        <h4 class="text-center">Thank You for visting DBeauty Center</h4>
         <h6 class="text-center"> <i>No Cash Refund. A wallet note will be issues. Terms and Conditions apply.</i></h6>
-        <h5 class="text-center"><i class="fa fa-phone"></i> 965 99199835 || <i class="fa fa-whatsapp"></i> 965 99199835 || <i class="fa fa-instagram"></i>rituals_salon</h5>
+        <h5 class="text-center">66633969</h5>
     </div>
 </div>

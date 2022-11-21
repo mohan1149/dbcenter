@@ -39,7 +39,7 @@ $(document).ready(function () {
                 };
                 if (!$('table#pos_table tbody').find('.product_row').length <= 0) {
                     pos_print(print_content);
-                    pos_form_obj.submit();
+                    // pos_form_obj.submit();
                 } else {
                     pos_print(print_content);
                 }

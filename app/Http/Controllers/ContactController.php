@@ -13,6 +13,7 @@ use App\Utils\TransactionUtil;
 use App\Utils\Util;
 use DB;
 use Excel;
+use Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -380,7 +381,7 @@ class ContactController extends Controller
             }
 
             $input = $request->only(['type', 'supplier_business_name',
-                'name', 'tax_number', 'pay_term_number', 'pay_term_type', 'mobile', 'landline', 'alternate_number', 'city', 'state', 'country', 'landmark', 'customer_group_id', 'contact_id', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'email']);
+                'name', 'tax_number', 'pay_term_number', 'pay_term_type', 'mobile', 'landline', 'alternate_number', 'city', 'state', 'country', 'landmark', 'customer_group_id', 'contact_id', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'email','dob']);
             $input['business_id'] = $business_id;
             $input['created_by'] = $request->session()->get('user.id');
 
@@ -1238,5 +1239,9 @@ class ContactController extends Controller
         ];
         $output['html_content'] = view('contact.print', compact('data'))->render();
         return $output;
+    }
+    public function todayBirthdays(){
+        $customers = Contact::whereMonth('dob',Carbon::now()->format('m'))->whereDay('dob', Carbon::now()->format('d'))->get();
+        return view('contact.birthday',['customers'=>$customers]);
     }
 }

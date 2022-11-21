@@ -1021,4 +1021,9 @@ return [
     'customer_count'=>'Number of Customers',
     'time'=>'Time',
     'edit_booking'=>'Edit Booking',
+    "birthdays"=>"Today Birthdays",
+    "today_birthdays"=>"Today Birthdays",
+    "wish_birthday"=>"Wish your customers a happy birthday",
+    "wish"=>"Wish"
+
 ];

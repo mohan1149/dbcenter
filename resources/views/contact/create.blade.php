@@ -51,7 +51,7 @@
             </div>
         </div>
       </div>
-      <div class="col-md-6">
+      {{-- <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('contact_id', __('lang_v1.contact_id') . ':') !!}
             <div class="input-group">
@@ -61,7 +61,7 @@
                 {!! Form::text('contact_id', null, ['class' => 'form-control','placeholder' => __('lang_v1.contact_id')]); !!}
             </div>
         </div>
-      </div>
+      </div> --}}
       <div class="col-md-6 customer_fields">
         <div class="form-group">
             {!! Form::label('customer_group_id', __('lang_v1.customer_group') . ':') !!}
@@ -70,6 +70,17 @@
                     <i class="fa fa-users"></i>
                 </span>
                 {!! Form::select('customer_group_id', $customer_groups, 1, ['class' => 'form-control']); !!}
+            </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('name', __('lang_v1.dob') . ':*') !!}
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-user"></i>
+                </span>
+                {!! Form::date('dob', null, ['class' => 'form-control','placeholder' => __('lang_v1.dob'), 'required']); !!}
             </div>
         </div>
       </div>

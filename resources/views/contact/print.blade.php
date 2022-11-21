@@ -15,7 +15,7 @@
 <body>
     <div class="container-fluid">
         <div style="text-align:center;">
-            <img src="/pos/public/img/default.png" alt="" srcset="" width="40%">
+            <img src="/img/default.png" alt="" srcset="" width="40%">
         </div>
         <div class="justifify-content-center text-center">
 	<h3>@lang("contact.name")  ::{{ $data->customer }}</h3>
@@ -28,9 +28,9 @@
 	</div>
         <br>
         <br>
-        <h4 class="text-center">Thank You for visting Rituals Salon</h4>
+        <h4 class="text-center">Thank You for visting DBeauty Center</h4>
         <h6 class="text-center"> <i>No Cash Refund. A wallet note will be issues. Terms and Conditions apply.</i></h6>
-        <h5 class="text-center"><i class="fa fa-phone"></i> 965 99199835 || <i class="fa fa-whatsapp"></i> 965 99199835 || <i class="fa fa-instagram"></i>rituals_salon</h5>
+        <h5 class="text-center">66633969</h5>
     </div>
 </body>
 </html>

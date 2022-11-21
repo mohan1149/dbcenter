@@ -1002,4 +1002,8 @@ return [
     'customer_count'=>"عدد الأشخاص",
     'time'=>"الوقت",
     'edit_booking'=>'تحرير الحجز',
+    "birthdays"=>"أعياد الميلاد اليوم",
+    "today_birthdays"=>"أعياد الميلاد اليوم",
+    "wish_birthday"=>"نتمنى لعملائك عيد ميلاد سعيد",
+    "wish"=>"نتمنى"
 ];

@@ -59,6 +59,7 @@
 
 				<!-- /.box-header -->
 				<div class="box-body">
+					<a class="btn btn-primary" href="/birthdays">{{ __("lang_v1.today_birthdays")}}</a>
 					<div class="row">
 						@if(!empty($pos_settings['enable_transaction_date']))
 							<div class="col-md-4 col-sm-6">
