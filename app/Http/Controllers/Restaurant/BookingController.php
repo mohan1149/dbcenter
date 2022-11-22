@@ -149,7 +149,7 @@ class BookingController extends Controller
                 $user_id = request()->session()->get('user.id');
                 $input = $request->input();
                 $booking_start = $this->commonUtil->uf_date($input['booking_start'], true);
-                //$booking_end = $this->commonUtil->uf_date($input['booking_end'], true);
+                $booking_end = $this->commonUtil->uf_date($input['booking_end'], true);
                 $data = [
                     'contact_id' => $input['contact_id'],
                     'waiter_id' => isset($input['res_waiter_id']) ? $input['res_waiter_id'] : null,
@@ -158,7 +158,7 @@ class BookingController extends Controller
                     'location_id' => $input['location_id'],
                     'correspondent_id' => $input['correspondent'],
                     'booking_start' => $booking_start,
-                    'booking_end' => '',
+                    'booking_end' => $booking_end,
                     'created_by' => $user_id,
                     'booking_status' => 'booked',
                     'booking_note' => $input['booking_note'],
@@ -228,8 +228,8 @@ class BookingController extends Controller
                 $user_id = request()->session()->get('user.id');
                 $input = $request->input();
                 $booking_start = $this->commonUtil->uf_date($input['booking_start'], true);
-                //$booking_end = $this->commonUtil->uf_date($input['booking_end'], true);
-                //$date_range = [$booking_start, $booking_end];
+                $booking_end = $this->commonUtil->uf_date($input['booking_end'], true);
+                $date_range = [$booking_start, $booking_end];
                 $data = [
                     'contact_id' => $input['contact_id'],
                     'waiter_id' => isset($input['res_waiter_id']) ? $input['res_waiter_id'] : null,
@@ -483,6 +483,7 @@ class BookingController extends Controller
                     'bookings.id as id',
                     'contacts.name as customer',
                     'booking_start',
+                    'booking_end',
                     'mobile',
                     'services',
                     'users.first_name',

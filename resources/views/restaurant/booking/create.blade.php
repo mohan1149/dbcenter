@@ -80,7 +80,7 @@
 							</div>
 						</div>
 					</div>
-					{{-- <div class="col-sm-6">
+					<div class="col-sm-6">
 						<div class="form-group">
 							{!! Form::label('status', __('restaurant.end_time') . ':*') !!}
 	            			<div class='input-group date' >
@@ -90,7 +90,7 @@
 							{!! Form::text('booking_end', null, ['class' => 'form-control','placeholder' => __( 'restaurant.end_time' ), 'required', 'id' => 'end_time', 'readonly']); !!}
 							</div>
 						</div>
-					</div> --}}
+					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
 							<div class="input-group">

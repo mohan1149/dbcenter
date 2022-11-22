@@ -72,7 +72,8 @@
 		<!-- Title of receipt -->
 		@if(!empty($receipt_details->invoice_heading))
 			<h3 class="text-center">
-				{!! $receipt_details->invoice_heading !!}
+				{{__("lang_v1.invoice")}}
+				{{-- {!! $receipt_details->invoice_heading !!} --}}
 			</h3>
 		@endif
 
@@ -80,7 +81,7 @@
 		<p style="width: 100% !important" class="word-wrap">
 			<span class="pull-left text-left word-wrap">
 				@if(!empty($receipt_details->invoice_no_prefix))
-					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
+					<b>{{ __("lang_v1.invoice_no") }}</b>
 				@endif
 				{{$receipt_details->invoice_no}}
 
@@ -114,7 +115,7 @@
 				<!-- customer info -->
 				@if(!empty($receipt_details->customer_name))
 					<br/>
-					<b>{{ $receipt_details->customer_label }}</b> {{ $receipt_details->customer_name." (".strip_tags($receipt_details->customer_info).") " }} <br>
+					<b>{{ __("lang_v1.customer") }}</b> {{ $receipt_details->customer_name." (".strip_tags($receipt_details->customer_info).") " }} <br>
 				@endif
 				<!--@if(!empty($receipt_details->customer_info))-->
 				<!--	{!! $receipt_details->customer_info !!}-->
@@ -141,7 +142,7 @@
 			</span>
 
 			<span class="pull-right text-left">
-				<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
+				<b>{{__("lang_v1.date")}}</b> {{$receipt_details->invoice_date}}
 
 				@if(!empty($receipt_details->due_date_label))
 				<br><b>{{$receipt_details->due_date_label}}</b> {{$receipt_details->due_date ?? ''}}
@@ -200,10 +201,10 @@
 		<table class="table table-responsive">
 			<thead>
 				<tr>
-					<th>{{$receipt_details->table_product_label}}</th>
-					<th>{{$receipt_details->table_qty_label}}</th>
-					<th>{{$receipt_details->table_unit_price_label}}</th>
-					<th>{{$receipt_details->table_subtotal_label}}</th>
+					<th>{{__("lang_v1.service")}}</th>
+					<th>{{__("lang_v1.qty")}}</th>
+					<th>{{ __("lang_v1.unit_price")}}</th>
+					<th>{{ __("lang_v1.total")}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -312,7 +313,7 @@
 				<tbody>
 					<tr>
 						<th style="width:70%">
-							{!! $receipt_details->subtotal_label !!}
+							{{ __("lang_v1.sub_total") }}
 						</th>
 						<td>
 							{{$receipt_details->subtotal}}
@@ -371,7 +372,7 @@
 					<!-- Total -->
 					<tr>
 						<th>
-							{!! $receipt_details->total_label !!}
+							{{ __("lang_v1.total")}}
 						</th>
 						<td>
 							{{$receipt_details->total}}

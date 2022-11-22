@@ -1024,6 +1024,14 @@ return [
     "birthdays"=>"Today Birthdays",
     "today_birthdays"=>"Today Birthdays",
     "wish_birthday"=>"Wish your customers a happy birthday",
-    "wish"=>"Wish"
+    "wish"=>"Wish",
+    "invoice"=>"Invoice",
+    "invoice_no"=>"Invoice No.",
+    "customer"=>"Customer",
+    "service"=>"Service",
+    "qty"=>"QTY",
+    "total"=>"Total",
+    "sub_total"=>'Sub Total',
+    "unpaid"=>"Un Paid"
 
 ];
