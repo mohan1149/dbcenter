@@ -1,29 +1,24 @@
 $(document).ready(function () {
     // mohan changes for pos
-    let subscription_name = "";
-    let quota_used = 0;
-    let quota_left = 0;
-    let subscription_cost = 0;
-    let subscription_pieces = 0;
-
-    $('.brought_today_count').on('keyup', () => {
-        if (parseInt($('.brought_today_count').val()) > quota_left) {
-            alert("Customer don't have enough subscription plan");
+    let csgs = "";
+    let selected = "";
+    $('.brought_today_count').on('keyup',(e)=>{
+        if(e.target.value > selected[0].available){
+            alert('Not Available');
             $('.brought_today_count').val(0);
-            $('.brought_today_count').focus();
         }
-    });
+    })
     $('.save_tranasaction').on('click', () => {
         let lang = document.documentElement.lang;
         let dir = lang === "ar" ? "rtl" : "ltr";
         let today_brought = $('.brought_today_count').val();
-        let net_total_avail = quota_left - today_brought;
-        let total_used = subscription_pieces - net_total_avail;
+        let net_total_avail = selected[0].available - today_brought;
+        let total_used = selected[0].total - net_total_avail;
         $('.brought_today').text(today_brought);
         $('.net_available').text(net_total_avail);
         let cid = $('#customer_id').val();
         let data = {
-            cid: cid,
+            cid: $('#custGrp').val(),
             net_total_avail: net_total_avail,
             total_used: total_used,
         }
@@ -45,17 +40,13 @@ $(document).ready(function () {
                 }
             },
             error: (error) => {
-                console.log(error);
                 $("#ajaxModal").modal("hide");
                 alert('Something went wrong');
             }
         });
-
-        // var newWin = window.open('', 'Print-Window');
-        // newWin.document.open();
-        // newWin.document.write('<html dir=' + dir + '><title>Sahar Salon</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><body onload="window.print()">' +  + '</body></html>');
-        // newWin.document.close();
     });
+
+
     $('#customer_id').on('change', () => {
         let cid = $('#customer_id').val();
         if (cid !== '1') {
@@ -65,36 +56,18 @@ $(document).ready(function () {
                 } else {
                     if (response.group_id === 1) {
                         $('.pos_pod_list').show();
-                        //$('.pos_customer_subscripion_info').hide();
                         $('.payment_panel').show();
                     } else {
-                        // $('.pos_pod_list').hide();
-                        $('.pos_customer_subscripion_info').show();
-                        //$('.payment_panel').hide();
-                        if (response.custom_field1 === "on") {
-                            $('.subs_paid_badge').show();
-                            $('.subs_unpaid_badge').hide();
-                        } else {
-                            $('.subs_paid_badge').hide();
-                            $('.subs_unpaid_badge').show();
+                        csgs = response;
+                        $('.customer_name').text(response[0].customer);
+                        $('.customer_phone').text(response[0].mobile);
+                        $('#custGrp').empty();
+                        let options = "<option value='0'>Choose</option>";
+                        for (let index = 0; index < response.length; index++) {
+                            options += "<option value='" + response[index].id + "'>" + response[index].name + "</option>"
                         }
-                        subscription_name = response.name;
-                        quota_used = response.custom_field2;
-                        quota_left = response.custom_field3;
-                        subscription_cost = response.subscription_cost;
-                        subscription_pieces = response.subscription_pieces;
-
-                        $('.customer_name').text(response.customer);
-                        $('.customer_phone').text(response.mobile);
-                        $('.subscription_name').text(subscription_name);
-                        $('.quota_used').text(quota_used);
-                        $('.quota_left').text(quota_left);
-                        $('.subscription_cost').text(subscription_cost);
-                        $('.subscription_pieces').text(subscription_pieces);
-
-                        $('.p_subscription_name').text(subscription_name);
-                        $('.p_subscription_cost').text(subscription_cost);
-                        $('.p_subscription_pieces').text(subscription_pieces);
+                        $('#custGrp').append(options);
+                        $('.pos_customer_subscripion_info').show();
                     }
                 }
             })
@@ -106,6 +79,21 @@ $(document).ready(function () {
             $('.payment_panel').show();
         }
     });
+
+    $("#custGrp").change(e => {
+        selected = csgs.filter((item) => item.id == e.target.value);
+        $('.sub_payment_status').text(selected[0].payment_status);
+        $('.subscription_name').text(selected[0].name);
+        $('.quota_used').text(selected[0].used);
+        $('.quota_left').text(selected[0].available);
+        $('.subscription_cost').text("KWD "+selected[0].subscription_cost.toFixed(3));
+        $('.subscription_pieces').text(selected[0].total);
+        $('.p_subscription_name').text(selected[0].name);
+        $('.p_subscription_cost').text("KWD "+selected[0].subscription_cost.toFixed(3));
+        $('.p_subscription_pieces').text(selected[0].total);
+    });
+
+
     $('.renewCustomerSubscriptionPlan').on('click', () => {
         $("#ajaxModal").modal("show");
         let paid_for_renewal = $('#paid_for_renewal')[0].checked;

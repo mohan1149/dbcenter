@@ -313,10 +313,13 @@ Route::middleware(['IsInstalled', 'auth', 'SetSessionData', 'language', 'timezon
     Route::post('/subscriptions/plans/update/{id}', 'SubscriptionController@plansUpdate');
 
     Route::post('/subscriptions/plans/delete/{id}', 'SubscriptionController@plansDelete');
-
     Route::get('/subscriptions/orders', 'SubscriptionController@ordersIndex');
+    Route::get('/customer/subscription/{id}', 'CustomerGroupController@customerSubscriptions');
+    Route::get('/customer-subscription-assign', 'CustomerGroupController@assignToGroup');
+    Route::post('/customer/subscription/{id}', 'CustomerGroupController@assignCustomerToGroup');
+    Route::get('/editCustSub/{id}', 'CustomerGroupController@editCustSub');
+    Route::post('/edit-subscription/{id}', 'CustomerGroupController@updateCustomerGroup');
 
-    
     //Backup
     Route::get('backup/download/{file_name}', 'BackUpController@download');
     Route::get('backup/delete/{file_name}', 'BackUpController@delete');

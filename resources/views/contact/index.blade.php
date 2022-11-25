@@ -48,27 +48,30 @@
                             @elseif( $type == 'customer')
                                 <th>@lang('user.name')</th>
                                 <th>@lang('lang_v1.added_on')</th>
-                                <th>@lang('lang_v1.renewal_count')</th>
-                                <th>@lang('lang_v1.customer_group')</th>
+                                {{-- <th>@lang('lang_v1.renewal_count')</th> --}}
+                                {{-- <th>@lang('lang_v1.customer_group')</th> --}}
                                 <th>@lang('business.address')</th>
                                 <th>@lang('contact.mobile')</th>
-                                <th>@lang('lang_v1.subscription_cost')</th>
-                                <th>@lang('lang_v1.subscription_pieces')</th>
-                                <th>@lang('lang_v1.quota_used')</th>
-                                <th>@lang('lang_v1.quota_left')</th>
-                                <th>@lang('lang_v1.customer_status')</th>
+                                <th>@lang('lang_v1.subscription')</th>
+
+                                
+                                {{-- <th>@lang('lang_v1.subscription_cost')</th> --}}
+                                {{-- <th>@lang('lang_v1.subscription_pieces')</th> --}}
+                                {{-- <th>@lang('lang_v1.quota_used')</th> --}}
+                                {{-- <th>@lang('lang_v1.quota_left')</th> --}}
+                                {{-- <th>@lang('lang_v1.customer_status')</th> --}}
                                 <th>@lang('messages.action')</th>
                             @endif
                         </tr>
                     </thead>
                     @if ($type == 'customer')
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr class="bg-gray font-17 text-center footer-total">
                             <td colspan="7">@lang('lang_v1.grand_total')</td>
                             <td><span class="display_currency" id="footer_subscription_total" data-currency_symbol ="true"></span></td>
                             <td colspan="5"></td>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     @else
                     <tfoot>
                         <tr class="bg-gray font-17 text-center footer-total">

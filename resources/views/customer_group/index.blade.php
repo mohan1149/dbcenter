@@ -34,6 +34,7 @@
                             {{-- <th>@lang( 'lang_v1.calculation_percentage' )</th> --}}
                             <th>@lang( 'lang_v1.subscription_cost' )</th>
                             <th>@lang( 'lang_v1.subscription_pieces' )</th>
+                            <th>@lang( 'lang_v1.expire_in' )</th>
                             <th>@lang( 'messages.action' )</th>
                         </tr>
                     </thead>

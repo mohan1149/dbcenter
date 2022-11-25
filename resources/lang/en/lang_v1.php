@@ -1032,6 +1032,29 @@ return [
     "qty"=>"QTY",
     "total"=>"Total",
     "sub_total"=>'Sub Total',
-    "unpaid"=>"Un Paid"
+    "unpaid"=>"Un Paid",
+    "used"=>'Used',
+    "payment_status"=>"Payment Status",
+    "amount_paid"=>'Amount Paid',
+    "sub_status"=>"Expired",
+    "renewed_on"=>'Created On / Renewed On',
+    "expiration_date"=>'Expired On',
+    "edit"=>"Edit",
+    "add_to_another_group"=>'Add to Another Group',
+    "un_paid"=>"Un Paid",
+    "partially"=>"Partially",
+    "group"=>"Group",
+    "assign_to_another_group"=>'Add to Another group',
+    "edit_subscription_group"=>"Edit Subscription Group",
+    "expired_status"=>"Expiration Status",
+    "not_expired"=>"Not expired",
+    "no"=>'No',
+    "yes"=>"Yes",
+    "subscription"=>"Subscription",
+    "choose_group"=>"Choose Group",
+    "sub_payment_status"=>'Payment Status',
+    "before"=>"Before",
+    "after"=>"After"
+
 
 ];

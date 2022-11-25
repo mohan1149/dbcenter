@@ -210,9 +210,7 @@ class ContactController extends Controller
             $business_id = request()->session()->get('user.business_id');
     
             $query = Contact::leftjoin('transactions AS t', 'contacts.id', '=', 't.contact_id')
-                        ->leftjoin('customer_groups AS cg', 'contacts.customer_group_id', '=', 'cg.id')
                         ->where('contacts.business_id', $business_id)
-                        ->where('contacts.customer_group_id','!=',1)
                         ->whereDate('contacts.created_at', '>=', $request['start_date'])
                         ->whereDate('contacts.created_at', '<=', $request['end_date'])
                         ->onlyCustomers()
@@ -222,9 +220,6 @@ class ContactController extends Controller
                                 'contacts.name', 
                                 'contacts.created_at',
                                 'total_rp',
-                                'cg.name as customer_group', 
-                                'cg.subscription_cost',
-                                'cg.subscription_pieces',
                                 'city', 
                                 'state', 
                                 'country', 
@@ -232,12 +227,7 @@ class ContactController extends Controller
                                 'mobile', 
                                 'contacts.id', 
                                 'is_default',
-                                'custom_field1',
-                                'custom_field2',
-                                'custom_field3',
                                 'custom_field4',
-                                'renewal_count',
-                                'total_paid_value',
                                 DB::raw("SUM(IF(t.type = 'sell' AND t.status = 'final', final_total, 0)) as total_invoice"),
                                 DB::raw("SUM(IF(t.type = 'sell' AND t.status = 'final', (SELECT SUM(IF(is_return = 1,-1*amount,amount)) FROM transaction_payments WHERE transaction_payments.transaction_id=t.id), 0)) as invoice_received"),
                                 DB::raw("SUM(IF(t.type = 'sell_return', final_total, 0)) as total_sell_return"),
@@ -248,22 +238,10 @@ class ContactController extends Controller
                         ->groupBy('contacts.id');
             $contacts = Datatables::of($query)
                 ->addColumn('address', '{{implode(", ",array_filter([$custom_field4,$city,$state,$country,$landmark]))}}')
-                // ->addColumn(
-                //     'due',
-                //     '<span class="display_currency contact_due" data-orig-value="{{$total_invoice - $invoice_received}}" data-currency_symbol=true data-highlight=true>{{($total_invoice - $invoice_received)}}</span>'
-                // )
-                ->editColumn(
-                    'total_paid_value',
-                    '<span class="display_currency total_paid_value" data-orig-value="{{ $total_paid_value }}" data-currency_symbol=true data-highlight=false>{{ $total_paid_value }}</span>'
-                )
-                ->editColumn(
-                    'custom_field1',
-                    '<h5 class="customer_sub_status_<?php echo $custom_field1 == "on" ? "on" : "off" ?>"><?php echo $custom_field1 == "on" ? "Paid" : "Not Paid" ?></h5>'
-                )
-                ->addColumn(
-                    'custom_field3',
-                    '<h5><span class="badge <?php echo $custom_field3 == 0 ? "zero_subs_left" : "non_zero" ?>"><?php echo $custom_field3; ?></span></h5>'
-                )
+                ->addColumn('subscription',function($query){
+                    return '<a href="/customer/subscription/'.$query->id.'">View</a>';
+                })
+
                 ->addColumn(
                     'action',
                     '<div class="btn-group">
@@ -296,21 +274,9 @@ class ContactController extends Controller
                     @endif 
                     </ul></div>'
                 )
-                //<li><a href="{{action(\'ContactController@show\', [$id])}}"><i class="fa fa-cog" aria-hidden="true"></i> @lang("messages.block_user")</a></li>
                 ->editColumn('total_rp', '{{$total_rp ?? 0}}')
                 ->editColumn('created_at', '{{@format_date($created_at)}}')
-                // ->removeColumn('total_invoice')
-                // ->removeColumn('opening_balance')
-                // ->removeColumn('opening_balance_paid')
-                // ->removeColumn('invoice_received')
-                // ->removeColumn('state')
-                // ->removeColumn('country')
-                // ->removeColumn('city')
-                // ->removeColumn('type')
-                // ->removeColumn('id')
-                // ->removeColumn('is_default')
-                // ->removeColumn('total_sell_return')
-                // ->removeColumn('sell_return_paid')
+
                 ->filterColumn('address', function ($query, $keyword) {
                     $query->whereRaw("CONCAT(COALESCE(landmark, ''), ', ', COALESCE(city, ''), ', ', COALESCE(state, ''), ', ', COALESCE(country, '') ) like ?", ["%{$keyword}%"]);
                 });
@@ -318,7 +284,7 @@ class ContactController extends Controller
             if (!$reward_enabled) {
                 $contacts->removeColumn('total_rp');
             }
-            return $contacts->rawColumns(['custom_field1','custom_field3','action','total_paid_value'])
+            return $contacts->rawColumns(['action','subscription'])
                             ->make(true);
             
         }catch(\Exception $e){
@@ -381,7 +347,7 @@ class ContactController extends Controller
             }
 
             $input = $request->only(['type', 'supplier_business_name',
-                'name', 'tax_number', 'pay_term_number', 'pay_term_type', 'mobile', 'landline', 'alternate_number', 'city', 'state', 'country', 'landmark', 'customer_group_id', 'contact_id', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'email','dob']);
+                'name', 'tax_number', 'pay_term_number', 'pay_term_type', 'mobile', 'landline', 'alternate_number', 'city', 'state', 'country', 'landmark', 'customer_group_id', 'contact_id', 'custom_field2', 'custom_field3', 'custom_field4', 'email','dob']);
             $input['business_id'] = $business_id;
             $input['created_by'] = $request->session()->get('user.id');
 
@@ -408,13 +374,20 @@ class ContactController extends Controller
 
                 if($request['type'] == 'customer'){
                     $csgi = CustomerGroup::where('id',$request['customer_group_id'])->first();
-                    $cusupdate  = Contact::where('id',$contact->id)
-                        ->update([
-                            'custom_field2'=> 0,
-                            'custom_field3' => $csgi->subscription_pieces,
-                            'total_paid_value' => $contact->custom_field1 == 'on' ?  $csgi->subscription_cost : 0,
-                        ]);
+                    DB::table('customer_subscriptions')->insert([
+                        'customer_id'=>$contact->id,
+                        'group_id'=>$request['customer_group_id'],
+                        'total'=>$csgi->subscription_pieces,
+                        'used'=>0,
+                        'available'=>$csgi->subscription_pieces,
+                        'payment_status'=> $request['payment_status'],
+                        'renewed_on'=> date('Y-m-d'),
+                        'amount_paid'=>$request['amount_paid'],
+                        'expired'=>0,
+                    ]);
                 }
+
+
                 //Add opening balance
                 if (!empty($request->input('opening_balance'))) {
                     $this->transactionUtil->createOpeningBalanceTransaction($business_id, $contact->id, $request->input('opening_balance'));
@@ -1151,24 +1124,14 @@ class ContactController extends Controller
 
     public function getCustomerSubscriptionInfo(Request $request){
         try{
-            $cid = $request['cid'];
-            $response = Contact::where('contacts.id',$cid)
-                ->join('customer_groups','customer_groups.id','=','contacts.customer_group_id')
-                ->where('contacts.type','customer')
-                ->select([
-                    'contacts.name as customer',
-                    'contacts.mobile',
-                    'contacts.contact_id',
-                    'contacts.custom_field1',
-                    'contacts.custom_field2',
-                    'contacts.custom_field3',
-                    'customer_groups.name',
-                    'customer_groups.subscription_cost',
-                    'customer_groups.subscription_pieces',
-                    'customer_groups.id as group_id',
-                ])
-                ->first();
-            return $response;
+            $customer_subscriptions = DB::table('customer_subscriptions')
+            ->where('customer_subscriptions.customer_id',$request['cid'])
+            ->where('expired','!=',1)
+            ->join('customer_groups','customer_groups.id','=','customer_subscriptions.group_id')
+            ->join('contacts','contacts.id','=','customer_subscriptions.customer_id')
+            ->select(['customer_subscriptions.*','customer_groups.name','subscription_cost','subscription_pieces','expire_in','contacts.mobile','contacts.name as customer'])
+            ->get();
+            return $customer_subscriptions;
         }catch(\Exception $e){
             return response()->json(0, 200);
         }
@@ -1179,12 +1142,13 @@ class ContactController extends Controller
             $cid = $request['cid'];
             $total_used = $request['total_used'];
             $total_avil = $request['net_total_avail'];
-            $response = Contact::where('contacts.id',$cid)
+            DB::table('customer_subscriptions')
+            ->where('id',$cid)
             ->update([
-                'custom_field2'=>$total_used,
-                'custom_field3'=>$total_avil,
+                'available'=>$total_avil,
+                'used'=>$total_used,
             ]);
-            return $response;
+            return "success";
         }catch(\Exception $e){
             return response()->json(0, 200);
         }

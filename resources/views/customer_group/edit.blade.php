@@ -23,6 +23,10 @@
         {!! Form::label('subscription_pieces', __( 'lang_v1.subscription_pieces' ) . ':*') !!}
           {!! Form::text('subscription_pieces', $customer_group->subscription_pieces, ['class' => 'form-control input_number', 'required', 'placeholder' => __( 'lang_v1.subscription_pieces' ) ]); !!}
       </div>  
+      <div class="form-group">
+        {!! Form::label('expire_in', __( 'lang_v1.expire_in' ) . ':*') !!}
+          {!! Form::text('expire_in', $customer_group->expire_in, ['class' => 'form-control input_number', 'required', 'placeholder' => __( 'lang_v1.expire_in' ) ]); !!}
+      </div>  
     </div>
 
     <div class="modal-footer">

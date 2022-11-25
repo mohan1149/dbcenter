@@ -4,17 +4,6 @@
 @section('title', 'POS')
 
 @section('content')
-
-<!-- Content Header (Page header) -->
-<!-- <section class="content-header">
-    <h1>Add Purchase</h1> -->
-    <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-    </ol> -->
-<!-- </section> -->
-
-<!-- Main content -->
 <section class="content no-print">
 	@if(!empty($pos_settings['allow_overselling']))
 		<input type="hidden" id="is_overselling_allowed">
