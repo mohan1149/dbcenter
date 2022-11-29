@@ -106,6 +106,7 @@
 
               @can('customer.view')
                 <li class="{{ $request->input('type') == 'customer' ? 'active' : '' }}"><a href="{{action('ContactController@index', ['type' => 'customer'])}}"><i class="fa fa-star"></i> @lang('report.customer')</a></li>
+                <li class=""><a href="/customer-expring-subscriptions"><i class="fa fa-star"></i> @lang('lang_v1.expring_subscriptions')</a></li>
                 <li class="{{ $request->input('type') == 'regular' ? 'active' : '' }}"><a href="{{action('ContactController@index', ['type' => 'regular'])}}"><i class="fa fa-star"></i> @lang('lang_v1.regular_customer')</a></li>
                 <li class="{{ $request->segment(1) == 'customer-group' ? 'active' : '' }}"><a href="{{action('CustomerGroupController@index')}}"><i class="fa fa-users"></i> @lang('lang_v1.customer_groups')</a></li>
               @endcan

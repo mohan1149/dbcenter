@@ -1055,7 +1055,9 @@ return [
     "sub_payment_status"=>'Payment Status',
     "before"=>"Before",
     "after"=>"After",
-    "expire_in"=>'Expire In (days)'
-
-
+    "expire_in"=>'Expire In (days)',
+    "amount_balance"=>'Balance',
+    "customer_expring_subscriptions"=>"Customer Expiring Subscriptions",
+    "expring_subscriptions"=>'Expiring Subscriptions',
+    "mobile"=>'Mobile'
 ];

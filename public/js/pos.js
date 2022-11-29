@@ -2,8 +2,8 @@ $(document).ready(function () {
     // mohan changes for pos
     let csgs = "";
     let selected = "";
-    $('.brought_today_count').on('keyup',(e)=>{
-        if(e.target.value > selected[0].available){
+    $('.brought_today_count').on('keyup', (e) => {
+        if (e.target.value > selected[0].available) {
             alert('Not Available');
             $('.brought_today_count').val(0);
         }
@@ -86,11 +86,13 @@ $(document).ready(function () {
         $('.subscription_name').text(selected[0].name);
         $('.quota_used').text(selected[0].used);
         $('.quota_left').text(selected[0].available);
-        $('.subscription_cost').text("KWD "+selected[0].subscription_cost.toFixed(3));
+        $('.subscription_cost').text("KWD " + selected[0].subscription_cost.toFixed(3));
         $('.subscription_pieces').text(selected[0].total);
         $('.p_subscription_name').text(selected[0].name);
-        $('.p_subscription_cost').text("KWD "+selected[0].subscription_cost.toFixed(3));
+        $('.p_subscription_cost').text("KWD " + selected[0].subscription_cost.toFixed(3));
         $('.p_subscription_pieces').text(selected[0].total);
+        $('.amount_paid').text('KWD ' + selected[0].amount_paid.toFixed(3));
+        $('.amount_balance').text('KWD ' + (selected[0].subscription_cost - selected[0].amount_paid).toFixed(3));
     });
 
 

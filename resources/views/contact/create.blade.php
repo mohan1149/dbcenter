@@ -261,9 +261,9 @@
                         <div class="form-group">
                             <label for="custom_field1">{{ __('lang_v1.payment_status') }}</label>
                             <select name="payment_status" id="" class="form-control">
-                                <option value="paid">{{ __('lang_v1.paid') }}</option>
-                                <option value="partially">{{ __('lang_v1.partially') }}</option>
-                                <option value="un_paid">{{ __('lang_v1.un_paid') }}</option>
+                                <option value="Paid/مؤمن للدفع">{{ __('lang_v1.paid') }}</option>
+                                <option value="Partially Paid/المدفوعة جزئيا">{{ __('lang_v1.partially') }}</option>
+                                <option value="Not Paid/غير مدفوع">{{ __('lang_v1.un_paid') }}</option>
                             </select>
                         </div>
                     </div>

@@ -225,6 +225,21 @@ class CustomerGroupController extends Controller
             return $e->getMessage();
         }
     }
+    public function customerExpringSubscriptions(Request $request){
+        try {
+            $customer_subscriptions = DB::table('customer_subscriptions')
+            ->join('customer_groups','customer_groups.id','=','customer_subscriptions.group_id')
+            ->join('contacts','contacts.id','=','customer_subscriptions.customer_id')
+            ->select(['customer_subscriptions.*','customer_groups.name','expire_in','subscription_cost','contacts.name as cust','contacts.mobile'])
+            ->get();
+            return view('contact.expnear',['customer_subscriptions'=>$customer_subscriptions]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    
+
+
     public function assignToGroup(){
         $business_id = request()->session()->get('user.business_id');
         $customer_groups = CustomerGroup::select(['name','id'])->get();
