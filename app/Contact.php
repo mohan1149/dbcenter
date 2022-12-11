@@ -12,7 +12,7 @@ class Contact extends Authenticatable
 {
     use Notifiable;
 
-    use SoftDeletes;
+    // use SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.
