@@ -239,7 +239,7 @@ class ContactController extends Controller
             $contacts = Datatables::of($query)
                 ->addColumn('address', '{{implode(", ",array_filter([$custom_field4,$city,$state,$country,$landmark]))}}')
                 ->addColumn('subscription',function($query){
-                    return '<a href="/customer/subscription/'.$query->id.'">View</a>';
+                    return '<a href="/customer/subscription/'.$query->id.'">'.__("lang_v1.view").'</a>';
                 })
 
                 ->addColumn(

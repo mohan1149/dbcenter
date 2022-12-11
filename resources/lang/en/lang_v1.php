@@ -1059,5 +1059,7 @@ return [
     "amount_balance"=>'Balance',
     "customer_expring_subscriptions"=>"Customer Expiring Subscriptions",
     "expring_subscriptions"=>'Expiring Subscriptions',
-    "mobile"=>'Mobile'
+    "mobile"=>'Mobile',
+    "view"=>'View'
+
 ];

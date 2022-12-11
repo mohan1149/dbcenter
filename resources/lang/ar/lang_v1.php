@@ -105,7 +105,7 @@ return [
 "months" => "الأشهر",
 "days" => "الأيام",
 "suppliers" => "الموردين",
-"customers" => "العملاء",
+"customers" => "العملاء المشتركين",
 "enter_product_name_to_print_labels" => "أدخل اسم المنتج لطباعة الملصقات",
 "manage_product_variations" => "إدارة تباينات المنتجات",
 "all_variations" => "كل الأشكال",
@@ -994,7 +994,7 @@ return [
     'valid'=>'قبول',
     'expired'=>'منتهي الصلاحية ',
     'customers_count'=> 'عدد',
-    'regular_customer'=>"زبون منتظم",
+    'regular_customer'=>"عميل عادي",
     'from_customer'=>"من العميل",
     'to_customer'=>"للعميل",
     'gifted_to'=>'موهوب ل',
@@ -1039,6 +1039,7 @@ return [
     "expire_in"=>'تنتهي الصلاحية في (أيام)',
     "amount_balance"=>'المبلغ المستحق',
     "customer_expring_subscriptions"=>"انتهاء صلاحية اشتراكات العميل",
-    "expring_subscriptions"=>'Expiring Subscriptions',
-    "mobile"=>'التليفون المحمول'
+    "expring_subscriptions"=>'تقرير انتهاء الاشتراكات',
+    "mobile"=>'التليفون المحمول',
+    "view"=>'عرض'
 ];
