@@ -113,7 +113,12 @@ class ContactController extends Controller
                         <li><a href="{{action(\'ContactController@destroy\', [$id])}}" class="delete_contact_button"><i class="glyphicon glyphicon-trash"></i> @lang("messages.delete")</a></li>
                     @endcan
                     </ul></div>'
-                )->rawColumns(['actions'])
+                )
+                ->addColumn('addToGrp','
+                <button  id={{$id}} type="button" class="btn btn-block btn-primary btn-modal" data-href="/customer-subscription-assign/1" data-container=".customer_subs_modal">
+                            <i class="fa fa-plus"></i> @lang("lang_v1.assign_to_another_group")</button>
+                ')
+                ->rawColumns(['actions','addToGrp'])
                 ->make(true);
             
         }catch(\Exception $e){
@@ -211,6 +216,7 @@ class ContactController extends Controller
     
             $query = Contact::leftjoin('transactions AS t', 'contacts.id', '=', 't.contact_id')
                         ->where('contacts.business_id', $business_id)
+                        ->where('contacts.customer_group_id','!=',1)
                         ->whereDate('contacts.created_at', '>=', $request['start_date'])
                         ->whereDate('contacts.created_at', '<=', $request['end_date'])
                         ->onlyCustomers()

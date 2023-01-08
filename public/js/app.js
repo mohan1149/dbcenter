@@ -373,9 +373,11 @@ $(document).ready(function () {
 
     //regular customers
     var regular_customers_table_colums = [
+        { data: 'id', name: 'id' },
         { data: 'name', name: 'name' },
         { data: 'mobile', name: 'mobile' },
         { data: 'actions', name: 'actions' },
+        { data: 'addToGrp', name: 'addToGrp' },
     ];
     var regular_customers_table = $('#regular_customers_table').DataTable({
         processing: true,

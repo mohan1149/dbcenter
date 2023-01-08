@@ -2,9 +2,17 @@
     <div class="modal-content">
         <div class="container">
             <h3>{{ __('lang_v1.assign_to_another_group') }}</h3>
-            <form action="" method="POST" class="m-5 py-5">
+            <form action="customer/subscription/null" method="POST" class="m-5 py-5">
                 @csrf
                 <div class="row">
+                    @if ($setid == 1)
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input type="text" class="form-control" name="conatct_id" style="width: 50% !important">
+                        </div>
+                    </div>
+                    @endif
                     <div class="col-12">
                         <div class="form-group">
                             <label for="group">{{ __('lang_v1.group') }}</label>

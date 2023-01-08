@@ -28,9 +28,11 @@
                 <table class="table table-bordered table-striped" id="regular_customers_table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>@lang('user.name')</th>
                             <th>@lang('contact.mobile')</th>
                             <th>@lang('messages.action')</th>
+                            <th>@lang('lang_v1.assign_to_another_group')</th>
                         </tr>
                     </thead>
                 </table>
@@ -41,6 +43,8 @@
     <div class="modal fade contact_modal" tabindex="-1" role="dialog" 
     	aria-labelledby="gridSystemModalLabel">
     </div>
+    <div class="modal fade customer_subs_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    </div>
     <div class="modal fade pay_contact_due_modal" tabindex="-1" role="dialog" 
         aria-labelledby="gridSystemModalLabel">
     </div>
@@ -48,4 +52,14 @@
 </section>
 <!-- /.content -->
 
+@endsection
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            $('.catgrp').click(e=>{
+                console.log();
+            });
+        });
+        
+    </script>
 @endsection

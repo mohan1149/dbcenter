@@ -315,7 +315,7 @@ Route::middleware(['IsInstalled', 'auth', 'SetSessionData', 'language', 'timezon
     Route::post('/subscriptions/plans/delete/{id}', 'SubscriptionController@plansDelete');
     Route::get('/subscriptions/orders', 'SubscriptionController@ordersIndex');
     Route::get('/customer/subscription/{id}', 'CustomerGroupController@customerSubscriptions');
-    Route::get('/customer-subscription-assign', 'CustomerGroupController@assignToGroup');
+    Route::get('/customer-subscription-assign/{flag}', 'CustomerGroupController@assignToGroup');
     Route::post('/customer/subscription/{id}', 'CustomerGroupController@assignCustomerToGroup');
     Route::get('/editCustSub/{id}', 'CustomerGroupController@editCustSub');
     Route::post('/edit-subscription/{id}', 'CustomerGroupController@updateCustomerGroup');

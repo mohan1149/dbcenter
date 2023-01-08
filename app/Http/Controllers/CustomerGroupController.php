@@ -7,6 +7,8 @@ use App\Utils\Util;
 use Illuminate\Http\Request;
 use DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Contact;
+
 
 class CustomerGroupController extends Controller
 {
@@ -226,24 +228,64 @@ class CustomerGroupController extends Controller
         }
     }
     public function customerExpringSubscriptions(Request $request){
-        try {
-            $customer_subscriptions = DB::table('customer_subscriptions')
-            ->join('customer_groups','customer_groups.id','=','customer_subscriptions.group_id')
-            ->join('contacts','contacts.id','=','customer_subscriptions.customer_id')
-            ->select(['customer_subscriptions.*','customer_groups.name','expire_in','subscription_cost','contacts.name as cust','contacts.mobile'])
-            ->get();
-            return view('contact.expnear',['customer_subscriptions'=>$customer_subscriptions]);
-        } catch (\Exception $e) {
-            return $e->getMessage();
+
+
+        if (!auth()->user()->can('customer.view')) {
+            abort(403, 'Unauthorized action.');
         }
+
+        if (request()->ajax()) {
+            $sd = $request['start_date'];
+            $ed = $request['end_date'];
+            if($sd == '' || $ed == ''){
+                $sd = date('YY-M-D');
+                $ed = date('YY-M-D');
+            }
+            $customer_subscriptions = DB::table('customer_subscriptions')
+                ->join('customer_groups','customer_groups.id','=','customer_subscriptions.group_id')
+                ->join('contacts','contacts.id','=','customer_subscriptions.customer_id')
+                ->whereDate('customer_subscriptions.renewed_on', '>=', $sd)
+                ->whereDate('customer_subscriptions.renewed_on', '<=', $ed)
+                ->where('customer_groups.id', '!=', 1)
+                ->select(['customer_subscriptions.*','customer_groups.name','expire_in','subscription_cost','contacts.name as cust','contacts.mobile'])
+            ->get();
+            return Datatables::of($customer_subscriptions)
+                    ->editColumn(
+                        'amount_paid',
+                        '<span class="display_currency amount_paid" data-currency_symbol="true" data-orig-value="{{$amount_paid}}">{{$amount_paid}}</span>'
+                    )
+                    ->editColumn(
+                        'amount_balance',
+                        '<span class="display_currency amount_balance" data-currency_symbol="true" data-orig-value="{{$subscription_cost - $amount_paid}}">{{$subscription_cost - $amount_paid}}</span>'
+                    )
+                    ->editColumn(
+                        'expiration_date',
+                        function($data){
+                            return date('Y-m-d',strtotime($data->renewed_on . $data->expire_in.' days'));
+                        }
+                    )
+                    ->editColumn(
+                        'expire_in',
+                        function($data){
+                            return (strtotime(date("Y-m-d", strtotime($data->renewed_on . $data->expire_in . " days"))) - strtotime(date("Y-m-d"))) / 86400;
+                        }
+                    )
+                    
+                    ->addColumn(
+                        'action',
+                        '<button type="button" class="btn btn-block btn-primary btn-modal" data-href="/editCustSub/{{ $id }}" data-container=".customer_subs_modal">
+                        <i class="fa fa-edit"></i> @lang("lang_v1.edit")</button>'
+                    )
+                    ->rawColumns(['action','amount_paid','amount_balance','expiration_date','expire_in'])
+                    ->make(true);
+        }
+        return view('contact.expnear');
     }
     
-
-
-    public function assignToGroup(){
+    public function assignToGroup(Request $request){
         $business_id = request()->session()->get('user.business_id');
         $customer_groups = CustomerGroup::select(['name','id'])->get();
-        return view('customer_group.assign',['customer_groups'=>$customer_groups]);
+        return view('customer_group.assign',['customer_groups'=>$customer_groups,'setid'=>$request['flag']]);
     }
     public function editCustSub($id){
         $business_id = request()->session()->get('user.business_id');
@@ -253,18 +295,37 @@ class CustomerGroupController extends Controller
 
     public function assignCustomerToGroup(Request $request){
         try {
-            $csgi = CustomerGroup::where('id',$request['group'])->first();
-            DB::table('customer_subscriptions')->insert([
-                'customer_id'=>$request['id'],
-                'group_id'=>$request['group'],
-                'total'=>$csgi->subscription_pieces,
-                'used'=>0,
-                'available'=>$csgi->subscription_pieces,
-                'payment_status'=> $request['payment_status'],
-                'renewed_on'=> date('Y-m-d'),
-                'amount_paid'=>$request['amount_paid'],
-                'expired'=>0,
-            ]);
+            if($request['id'] !== 'null'){
+                $csgi = CustomerGroup::where('id',$request['group'])->first();
+                DB::table('customer_subscriptions')->insert([
+                    'customer_id'=>$request['id'],
+                    'group_id'=>$request['group'],
+                    'total'=>$csgi->subscription_pieces,
+                    'used'=>0,
+                    'available'=>$csgi->subscription_pieces,
+                    'payment_status'=> $request['payment_status'],
+                    'renewed_on'=> date('Y-m-d'),
+                    'amount_paid'=>$request['amount_paid'],
+                    'expired'=>0,
+                ]);
+            }else{
+                $csgi = CustomerGroup::where('id',$request['group'])->first();
+                DB::table('customer_subscriptions')->insert([
+                    'customer_id'=>$request['conatct_id'],
+                    'group_id'=>$request['group'],
+                    'total'=>$csgi->subscription_pieces,
+                    'used'=>0,
+                    'available'=>$csgi->subscription_pieces,
+                    'payment_status'=> $request['payment_status'],
+                    'renewed_on'=> date('Y-m-d'),
+                    'amount_paid'=>$request['amount_paid'],
+                    'expired'=>0,
+                ]);
+                $cust = Contact::find($request['conatct_id']);
+                $cust->customer_group_id = $request['group'];
+                $cust->save();
+            }
+            
             return redirect()->back();
         } catch (\Exception $e) {
             return $e->getMessage();
