@@ -115,7 +115,7 @@ class ContactController extends Controller
                     </ul></div>'
                 )
                 ->addColumn('addToGrp','
-                <button  id={{$id}} type="button" class="btn btn-block btn-primary btn-modal" data-href="/customer-subscription-assign/1" data-container=".customer_subs_modal">
+                <button  id={{$id}} type="button" class="btn btn-block btn-primary btn-modal" data-href="/customer-subscription-assign/null" data-container=".customer_subs_modal">
                             <i class="fa fa-plus"></i> @lang("lang_v1.assign_to_another_group")</button>
                 ')
                 ->rawColumns(['actions','addToGrp'])

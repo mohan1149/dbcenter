@@ -11,7 +11,7 @@
             @can('customer.create')
                 @slot('tool')
                     <div class="box-tools">
-                        <button type="button" class="btn btn-block btn-primary btn-modal" data-href="/customer-subscription-assign/0"
+                        <button type="button" class="btn btn-block btn-primary btn-modal" data-href="/customer-subscription-assign/{{request('id')}}"
                             data-container=".customer_subs_modal">
                             <i class="fa fa-plus"></i> @lang('lang_v1.add_to_another_group')</button>
                     </div>

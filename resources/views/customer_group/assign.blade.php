@@ -2,10 +2,15 @@
     <div class="modal-content">
         <div class="container">
             <h3>{{ __('lang_v1.assign_to_another_group') }}</h3>
-            <form action="customer/subscription/null" method="POST" class="m-5 py-5">
+           
+                @if ($setid == 'null')
+                <form action="/customer/subscription/null" method="POST" class="m-5 py-5">
+                @else
+                <form action="/customer/subscription/{{$setid}}" method="POST" class="m-5 py-5">
+                @endif
                 @csrf
                 <div class="row">
-                    @if ($setid == 1)
+                    @if ($setid == 'null')
                     <div class="col-12">
                         <div class="form-group">
                             <label for="id">ID</label>

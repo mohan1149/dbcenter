@@ -35,8 +35,11 @@
                         <tfoot>
                             <tr>
                                 <td colspan="3"></td>
-                                <td colspan="6">
+                                <td>
                                     <span class="display_currency total_paid" data-currency_symbol="true"></span>
+                                </td>
+                                <td colspan="5">
+                                    <span class="display_currency total_balance" data-currency_symbol="true"></span>
                                 </td>
                             </tr>
                         </tfoot>
@@ -128,6 +131,10 @@
                 fnDrawCallback: function(oSettings) {
                     var order_total = sum_table_col($('#customer_sub_table'), 'amount_paid');
                     $('#customer_sub_table td .total_paid').text(order_total);
+
+                    var total_balance = sum_table_col($('#customer_sub_table'), 'amount_balance');
+                    $('#customer_sub_table td .total_balance').text(total_balance);
+                    
                     __currency_convert_recursively($('#customer_sub_table'));
                 },
 
