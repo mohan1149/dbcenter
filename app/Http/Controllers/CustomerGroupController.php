@@ -350,4 +350,20 @@ class CustomerGroupController extends Controller
             return $e->getMessage();
         }
     }
+    public function deleteCustomerSubscription(Request $request){
+        try {
+            $id = $request['id'];
+            DB::table('customer_subscriptions')
+            ->where('id',$id)
+            ->update([
+                'group_id'=> 0,
+                'customer_id'=>0
+            ]);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    
 }

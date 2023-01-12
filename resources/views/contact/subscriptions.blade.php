@@ -34,6 +34,7 @@
                                 <th>@lang('lang_v1.renewed_on')</th>
                                 <th>@lang('lang_v1.expiration_date')</th>
                                 <th>@lang('lang_v1.edit')</th>
+                                <th>@lang('lang_v1.click_to_delete')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +62,9 @@
                                         <button type="button" class="btn btn-block btn-primary btn-modal"
                                             data-href="/editCustSub/{{ $cust->id}}" data-container=".customer_subs_modal">
                                             <i class="fa fa-edit"></i> @lang('lang_v1.edit')</button>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger"  href="/delete-customer-sub/{{$cust->id}} }}"><i class="fa fa-edit"></i> @lang('lang_v1.click_to_delete')</a>
                                     </td>
                                 </tr>
                             @endforeach

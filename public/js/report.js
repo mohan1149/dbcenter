@@ -1232,8 +1232,10 @@ function updatePurchaseSell() {
         data: data,
         success: function(data) {
             $('.total_subscriptions').html(data.total_subscribers);
-            $('.total_paid_subscribers').html(data.total_paid_subscribers);
-            $('.total_unpaid_subscribers').html(data.total_unpaid_subscribers);
+            $('.total_paid_subscribers').html( __currency_trans_from_en(data.total_paid_subscribers, true) );
+            $('.total_unpaid_subscribers').html(__currency_trans_from_en(data.total_unpaid_subscribers - data.total_paid_subscribers, true));
+            $('.total_unpaid_subscribers').html(__currency_trans_from_en(data.total_unpaid_subscribers, true));
+            $('.net_profit').html(__currency_trans_from_en(data.total_paid_subscribers - data.total_unpaid_subscribers, false));
             $('.total_outdoor_orders').html(data.total_outside_orders);
             $('.total_completed').html(data.total_outside_orders_completed);
             $('.total_outdoor_orders_value').html(

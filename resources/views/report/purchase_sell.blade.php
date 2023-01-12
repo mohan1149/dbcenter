@@ -174,6 +174,14 @@
                         </span>
                     </td>
                 </tr>
+                <tr>
+                    <th>{{ __('report.net_profit') }}:</th>
+                    <td>
+                        <span class="net_profit">
+                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                        </span>
+                    </td>
+                </tr>
             </table>
             @endcomponent
         </div>

@@ -309,18 +309,15 @@ class ReportController extends Controller
                 ->where('customer_group_id','!=',1)
                 ->whereBetween('created_at', [$start_date, $end_date])
                 ->count();
-            $total_paid_subscribers = DB::table('contacts')
-                ->where('type','customer')
-                ->where('customer_group_id','!=',1)
-                ->whereBetween('created_at', [$start_date, $end_date])
-                ->where('custom_field1','on')
-                ->count();
-            $total_unpaid_subscribers = DB::table('contacts')
-                ->where('type','customer')
-                ->where('customer_group_id','!=',1)
-                ->whereBetween('created_at', [$start_date, $end_date])
-                ->where('custom_field1','!=','on')
-                ->count();
+            $total_paid_subscribers = DB::table('customer_subscriptions')
+                ->where('group_id','!=',1)
+                ->whereBetween('renewed_on', [$start_date, $end_date])
+                ->sum('amount_paid');
+            $total_unpaid_subscribers = DB::table('customer_subscriptions')
+                ->where('group_id','!=',1)
+                ->join('customer_groups as cg','cg.id','=','customer_subscriptions.group_id')
+                ->whereBetween('renewed_on', [$start_date, $end_date])
+                ->sum('subscription_cost');
 
             if($location_id){
                 $total_expenses = DB::table('transactions')

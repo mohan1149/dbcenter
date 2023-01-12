@@ -320,6 +320,7 @@ Route::middleware(['IsInstalled', 'auth', 'SetSessionData', 'language', 'timezon
     Route::get('/editCustSub/{id}', 'CustomerGroupController@editCustSub');
     Route::post('/edit-subscription/{id}', 'CustomerGroupController@updateCustomerGroup');
     Route::get('/customer-expring-subscriptions', 'CustomerGroupController@customerExpringSubscriptions');
+    Route::get('delete-customer-sub/{id}', 'CustomerGroupController@deleteCustomerSubscription');
 
     
     //Backup
