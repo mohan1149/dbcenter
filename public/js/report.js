@@ -1267,7 +1267,7 @@ function updatePurchaseSell() {
             );
             $('.total_sell_return').html(__currency_trans_from_en(data.total_sell_return, true));
 
-            $('.sell_minus_purchase').html(__currency_trans_from_en(data.difference.total, true));
+            $('.sell_minus_purchase').html(__currency_trans_from_en(data.difference.total+data.total_paid_subscribers, true));
             __highlight(data.difference.total, $('.sell_minus_purchase'));
 
             $('.difference_due').html(__currency_trans_from_en(data.difference.due, true));
