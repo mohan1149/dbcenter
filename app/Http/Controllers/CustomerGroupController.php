@@ -355,10 +355,7 @@ class CustomerGroupController extends Controller
             $id = $request['id'];
             DB::table('customer_subscriptions')
             ->where('id',$id)
-            ->update([
-                'group_id'=> 0,
-                'customer_id'=>0
-            ]);
+            ->delete();
             return redirect()->back();
         } catch (\Exception $e) {
             return $e->getMessage();
