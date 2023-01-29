@@ -37,15 +37,15 @@ class AddDocumentColumnToTransactionPaymentsTable extends Migration
 
     private function copyFiles($dir){
 
-        if (!file_exists(storage_path('app/public/' . $dir))) {
+        if (!file_exists(storage_path('storage/product/' . $dir))) {
             return false;
         }
 
         $delete = [];
         // Get array of all source files
-        $files = scandir(storage_path('app/public/' . $dir));
+        $files = scandir(storage_path('storage/product/' . $dir));
         // Identify directories
-        $source = storage_path('app/public/' . $dir . '/');
+        $source = storage_path('storage/product/' . $dir . '/');
         $destination = public_path('uploads/' . $dir . '/');
 
         if (!file_exists($destination)) {

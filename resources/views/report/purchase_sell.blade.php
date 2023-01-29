@@ -42,14 +42,14 @@
         <div class="col-xs-6">
             @component('components.widget', ['title' => __('sale.sells')])
                 <table class="table table-striped">
-                    <tr>
+                    {{-- <tr>
                         <th>{{ __('report.total_sell') }}:</th>
                         <td>
                             <span class="total_sell">
                                 <i class="fa fa-refresh fa-spin fa-fw"></i>
                             </span>
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>{{ __('report.sell_inc_tax') }}:</th>
                         <td>
@@ -161,7 +161,7 @@
                 <tr>
                     <th>{{ __('report.total_paid_subscribers') }}:</th>
                     <td>
-                        <span class="total_paid_subscribers">
+                        <span class="total_amount_paid">
                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                         </span>
                     </td>
@@ -169,19 +169,20 @@
                 <tr>
                     <th>{{ __('report.total_unpaid_subscribers') }}:</th>
                     <td>
-                        <span class="total_unpaid_subscribers">
+                        <span class="total_due_amount">
                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                         </span>
                     </td>
                 </tr>
-                {{-- <tr>
+                <tr>
                     <th>{{ __('report.net_profit') }}:</th>
                     <td>
                         <span class="net_profit">
                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                         </span>
                     </td>
-                </tr> --}}
+                </tr>
+                
             </table>
             @endcomponent
         </div>
