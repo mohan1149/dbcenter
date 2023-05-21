@@ -43,7 +43,7 @@ return [
     'before_amount' => 'قبل المبلغ',
     'after_amount' => 'بعد المبلغ',
     'barcode_label_error' => 'معرف SKU غير مدعوم لنوع الباركود المحدد',
-    'list_products' => 'قائمة المنتجات',
+    'list_products' => 'قائمة المنتجات / الخدمات',
     'list_expenses' => 'قائمة المصاريف',
     'add_expiry' => "أضف تاريخ انتهاء الصلاحية",
     'add_manufacturing_auto_expiry' => "أضف تاريخ الصنع وفترة الانتهاء",

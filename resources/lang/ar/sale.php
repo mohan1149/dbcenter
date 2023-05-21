@@ -17,7 +17,7 @@
 "finalize" => "دفع واستكمال",
 "express_finalize" => "استكمال </br> سريع",
 "product" => "منتج",
-"products" => "المنتجات",
+"products" => "المنتجات / الخدمات ",
 "unit_price" => "سعر الوحدة",
 "qty" => "الكمية",
 "subtotal" => "المجموع",
